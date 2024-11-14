@@ -1,0 +1,11 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+/target
+
+# Ignorar arquivos .class
+*.class
+
+# Ignorar diretórios de saída de compilação
+/bin/
+/out/
