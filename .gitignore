@@ -1,11 +1,20 @@
 # Default ignored files
 /shelf/
 /workspace.xml
-/target/classes/br/ufrn/bti/banco1000
-
-# Ignorar arquivos .class
+# Ignorar arquivos compilados
 *.class
 
-# Ignorar diretórios de saída de compilação
-/bin/
+# Ignorar diretórios de saída
+/target/
 /out/
+
+# Ignorar configurações do IntelliJ IDEA
+.idea/
+*.iml
+
+# Ignorar arquivos de log
+*.log
+
+# Ignorar arquivos do sistema operacional
+.DS_Store
+Thumbs.db
