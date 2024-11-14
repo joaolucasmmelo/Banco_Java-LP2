@@ -1,0 +1,11 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+/target/classes/br/ufrn/bti/banco1000
+
+# Ignorar arquivos .class
+*.class
+
+# Ignorar diretórios de saída de compilação
+/bin/
+/out/
