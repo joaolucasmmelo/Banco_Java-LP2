@@ -12,12 +12,10 @@ import java.util.Date;
  */
 public class Movimentacao {
 
-    public Date getData() {
-        return data;
-    }
-
-    public void setData(Date data) {
-        this.data = data;
+    public Movimentacao(String tipo, Cliente cliente, double valor) {
+        this.tipo = tipo;
+        this.cliente = cliente;
+        this.valor = valor;
     }
 
     public String getTipo() {
@@ -36,14 +34,6 @@ public class Movimentacao {
         this.cliente = cliente;
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
     public double getValor() {
         return valor;
     }
@@ -51,17 +41,9 @@ public class Movimentacao {
     public void setValor(double valor) {
         this.valor = valor;
     }
-    private Date data;
     private String tipo;
     private Cliente cliente;
-    private String descricao;
     private double valor;
     
-    public Movimentacao(String tipo, Cliente cliente, String descricao, double valor) {
-        this.data = new Date();
-        this.tipo = tipo;
-        this.cliente = cliente;
-        this.descricao = descricao;
-        this.valor = valor;
-    }
+
 }

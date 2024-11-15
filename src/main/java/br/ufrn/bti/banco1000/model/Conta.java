@@ -36,22 +36,20 @@ public class Conta {
         idContas.add(idConta);
     }
 
-    public int getNumConta(){
+    public int getIdConta(){
         return this.idConta;
     }
 
     public void depositar(double valor) {
         this.saldo = this.saldo + valor;
-        this.movimentacao.add(new Movimentacao("FORMA", this.cliente, "DEPOSITO", 
-            valor));
+        this.movimentacao.add(new Movimentacao("Deposito", this.cliente, valor));
         
     }
     
     public void sacar(double valor) {
         if (this.saldo - valor >= 0) {
             this.saldo = this.saldo - valor;
-            this.movimentacao.add(new Movimentacao("FORMA", this.cliente, "SAQUE", 
-            valor));
+            this.movimentacao.add(new Movimentacao("Saque", this.cliente, valor));
             
         }
     }
@@ -65,12 +63,10 @@ public class Conta {
     public void transferir(Conta conta, double valor) {
         
          if (this.saldo - valor >= 0) {
-           this.sacar(valor);
+           conta.sacar(valor);
            conta.depositar(valor);
-           conta.movimentacao.add(new Movimentacao("FORMA", this.cliente, 
-                   "ENTRADA POR TRANSFERENCIA", valor));
-           this.movimentacao.add(new Movimentacao("FORMA", this.cliente, 
-                   "SAIDA POR TRANSFERENCIA", valor));
+           conta.movimentacao.add(new Movimentacao("Saque", this.cliente, valor));
+           this.movimentacao.add(new Movimentacao("Deposito", this.cliente, valor));
         }
     }
     
