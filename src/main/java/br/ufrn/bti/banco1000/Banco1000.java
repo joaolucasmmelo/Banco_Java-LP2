@@ -27,6 +27,7 @@ public class Banco1000 {
 
         int n = 1;
         int verLogin = 0;
+        int cpfVerOp = 0;
 
         List<Cliente> clientesLista = new ArrayList<>();
         List<Integer> clientesCpf = new ArrayList<>();
@@ -38,7 +39,7 @@ public class Banco1000 {
             menu.menuImprime();
             n = entrada.nextInt();
 
-            if ((n != 1) && (n != 2) && (n != 3) && (n!= 4) && (n != 0) && (n != 5)){
+            if ((n != 1) && (n != 2) && (n != 3) && (n != 4) && (n != 0) && (n != 5)){
                 System.out.println("Por favor digite uma opção válida!");
             }
             else{
@@ -151,10 +152,70 @@ public class Banco1000 {
 
                 // Operações bancárias
                 if (n == 3){
+                    List<Integer> idsUsuario = new ArrayList<>();
+
                     // Autorização de login para os procedimentos da conta bancária
                     if (verLogin == 1){
-                        System.out.println("Autorizado");
+                        int verWhile = 0;
+                        int verWhileOp = 0;
 
+                        while (verWhile != 1){
+                            System.out.println("Suas contas: ");
+                            for (Conta conta : contas){
+                                if (cpfVerOp == conta.getCpf()){
+                                    idsUsuario.add(conta.getIdConta());
+                                    System.out.println(conta.getIdConta());
+                                }
+                            }
+
+                            System.out.print("\nDigite o ID da conta em que deseja realizar uma operação: ");
+                            int id = entrada.nextInt();
+
+                            for (int idVerLista : idsUsuario){
+                                if (id == idVerLista){
+                                    verWhile = 1;
+                                    int op = 1;
+                                    menu.menuOperacoesImprime();
+
+                                    while (verWhileOp != 1) {
+                                        op = entrada.nextInt();
+                                        if ((op != 1) && (op != 2) && (op != 3) && (op != 4) && (op != 0)) {
+                                            System.out.println("Por favor digite uma opção válida!");
+                                        } else {
+                                            if (op == 1) {
+                                                verWhileOp = 1;
+
+                                            }
+
+                                            if (op == 2) {
+                                                verWhileOp = 1;
+
+                                            }
+
+                                            if (op == 3) {
+                                                verWhileOp = 1;
+
+                                            }
+
+                                            if (op == 4) {
+                                                verWhileOp = 1;
+
+                                            }
+
+                                            if (op == 0) {
+                                                verWhileOp = 1;
+                                                System.out.println("Saindo das Operações bancárias.");
+
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (verWhile == 0){
+                                System.out.println("Digite um ID correspondente a uma das opções abaixo!");
+                            }
+                        }
                     }
                     else{
                         System.out.println("Você precisa estar logado em uma conta para poder realizar operações!");
@@ -164,10 +225,9 @@ public class Banco1000 {
 
                 //Autenticação de usuário
                 if (n == 4){
-                    System.out.println("Por favor digite o CPF proprietário da conta: ");
-
                     int verWhile = 0;
                     while (verWhile == 0){
+                        System.out.print("Por favor digite o CPF proprietário da conta: ");
                         int cpf = entrada.nextInt();
 
                         int i = 0;
@@ -181,19 +241,20 @@ public class Banco1000 {
 
                                     for (String senhaVer : clientesSenha){
                                         if (senha.equals(senhaVer)){
-                                            System.out.println("Usuário logado.");
-                                            System.out.println("Dados do cliente:");
+                                            System.out.println("\nUsuário logado.");
+                                            System.out.println("\nDados do cliente:");
 
                                             clientesLista.get(i).clienteImrpime();
+                                            cpfVerOp = clientesCpf.get(i);
 
                                             verWhile = 1;
                                             verLogin = 1;
                                         }
                                     }
-                                    if (verWhile == 0 && verLogin == 0){
+                                    if ((verWhile == 0) && (verLogin == 0)){
                                         break;
                                     }
-                                }while (verLogin != 1 && verWhile != 1);
+                                }while ((verLogin != 1) && (verWhile != 1));
                             }
                             i++;
                         }
@@ -208,6 +269,7 @@ public class Banco1000 {
                 if (n == 5){
                     if (verLogin == 1){
                         verLogin = 0;
+                        cpfVerOp = 0;
                         System.out.println("Sucesso ao sair da conta.");
                     }
                     else{
