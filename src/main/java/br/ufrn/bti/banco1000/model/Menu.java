@@ -9,6 +9,7 @@ public class Menu {
         System.out.println("2 - Criação de conta bancária");
         System.out.println("3 - Operações bancárias");
         System.out.println("4 - Login");
+        System.out.println("5 - Logout");
         System.out.println("0 - Sair");
     }
 }

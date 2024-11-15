@@ -24,8 +24,8 @@ public class Cliente {
     }
 
     public void clienteImrpime(){
-        System.out.println(this.nome);
-        System.out.println(this.cpf);
+        System.out.println("Nome: " + this.nome);
+        System.out.println("CPF : " + this.cpf);
     }
 
 
