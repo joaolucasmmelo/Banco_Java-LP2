@@ -36,7 +36,17 @@ public class Banco1000 {
         List<Conta> contas = new ArrayList<>();
 
         while (n != 0) {
-            menu.menuImprime();
+            if (verLogin == 0){
+                menu.menuImprime();
+            }
+            else{
+                System.out.println("\nDados da conta:");
+                System.out.println("Nome: " + clientesLista.get(verLogin).getNome());
+                System.out.println("CPF: " + clientesLista.get(verLogin).getCpf());
+                menu.menuImprime();
+            }
+
+
             n = entrada.nextInt();
 
             if ((n != 1) && (n != 2) && (n != 3) && (n != 4) && (n != 0) && (n != 5)){
@@ -65,8 +75,6 @@ public class Banco1000 {
                     clientesLista.add(cliente);
 
                     System.out.println("Sucesso ao cadastrar usuário!");
-                    System.out.println("Dados do cliente:");
-                    cliente.clienteImrpime();
                 }
 
                 // Criação de conta para o usuário selecionado
@@ -155,7 +163,7 @@ public class Banco1000 {
                     List<Integer> idsUsuario = new ArrayList<>();
 
                     // Autorização de login para os procedimentos da conta bancária
-                    if (verLogin == 1){
+                    if (verLogin != 0){
                         int verWhile = 0;
                         int verWhileOp = 0;
 
@@ -186,6 +194,7 @@ public class Banco1000 {
                                             System.out.println("Por favor digite uma opção válida!");
                                         }
                                         else {
+                                            // Consulta de Saldo
                                             if (op == 1) {
                                                 System.out.println("Saldo da conta " + id + ":");
                                                 for (Conta conta : contas){
@@ -195,18 +204,43 @@ public class Banco1000 {
                                                 }
                                             }
 
+                                            // Saque
                                             if (op == 2) {
+                                                int verSaque = 0;
 
+                                                for (Conta conta : contas){
+                                                    if (conta.getIdConta() == id){
+                                                        while (verSaque != 1){
+                                                            System.out.print("Digite quanto deseja sacar: ");
+                                                            double valorSaque = entrada.nextDouble();
+
+                                                            if (valorSaque > conta.getSaldo()){
+                                                                System.out.println("Saldo insuficiente!");
+                                                                System.out.println("Saldo disponível: R$ " + conta.getSaldo());
+                                                            }
+                                                            else{
+                                                                conta.setSaldo(conta.getSaldo() - valorSaque);
+                                                                System.out.println("Saldo Restante: R$ " + conta.getSaldo());
+
+                                                                verSaque = 1;
+                                                            }
+                                                        }
+                                                        break;
+                                                    }
+                                                }
                                             }
 
+                                            // Depósito
                                             if (op == 3) {
 
                                             }
 
+                                            //
                                             if (op == 4) {
 
                                             }
 
+                                            // Saída das operações bancárias
                                             if (op == 0) {
                                                 verWhileOp = 1;
                                                 System.out.println("Saindo das Operações bancárias.");
@@ -252,13 +286,13 @@ public class Banco1000 {
                                             cpfVerOp = clientesCpf.get(i);
 
                                             verWhile = 1;
-                                            verLogin = 1;
+                                            verLogin = i;
                                         }
                                     }
-                                    if ((verWhile == 0) && (verLogin == 0)){
+                                    if ((verWhile == 0) && (verLogin == i)){
                                         break;
                                     }
-                                }while ((verLogin != 1) && (verWhile != 1));
+                                }while ((verLogin == 0) && (verWhile != 1));
                             }
                             i++;
                         }
@@ -271,7 +305,7 @@ public class Banco1000 {
                 }
 
                 if (n == 5){
-                    if (verLogin == 1){
+                    if (verLogin != 0){
                         verLogin = 0;
                         cpfVerOp = 0;
                         System.out.println("Sucesso ao sair da conta.");
