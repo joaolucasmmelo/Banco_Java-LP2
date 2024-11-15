@@ -30,9 +30,6 @@ public class Banco1000 {
         int cpfVerOp = 0;
 
         List<Cliente> clientesLista = new ArrayList<>();
-        List<Integer> clientesCpf = new ArrayList<>();
-        List<String> clientesSenha = new ArrayList<>();
-        List<Integer> ids = new ArrayList<>();
         List<Conta> contas = new ArrayList<>();
 
         while (n != 0) {
@@ -54,26 +51,37 @@ public class Banco1000 {
             else{
                 // Cadastro de usuários
                 if (n == 1) {
+                    int verWhile = 0;
 
-                    System.out.println("Digite os dados necessários para o cadastro do usuário:");
+                    while (verWhile != 1){
+                        System.out.println("Digite os dados necessários para o cadastro do usuário:");
 
-                    System.out.print("\nDigite o nome do usuário: ");
-                    entrada.nextLine();
-                    String nome = entrada.nextLine();
+                        System.out.print("\nDigite o nome do usuário: ");
+                        entrada.nextLine();
+                        String nome = entrada.nextLine();
 
-                    System.out.print("\nDigite o CPF do usuário: ");
-                    int cpf = entrada.nextInt();
-                    clientesCpf.add(cpf);
+                        System.out.print("\nDigite o CPF do usuário: ");
+                        int cpf = entrada.nextInt();
 
-                    System.out.print("\nDigite a senha do usuário: ");
-                    entrada.nextLine();
-                    String senha = entrada.nextLine();
-                    clientesSenha.add(senha);
+                        for (Cliente cliente : clientesLista){
+                            if (cpf == cliente.getCpf()){
+                                System.out.println("Esse CPF já está cadastrado em nosso sistema!");
+                                verWhile = 1;
+                            }
+                        }
 
-                    Cliente cliente = new Cliente(nome, cpf, senha);
-                    clientesLista.add(cliente);
+                        if (verWhile != 1){
+                            System.out.print("\nDigite a senha do usuário: ");
+                            entrada.nextLine();
+                            String senha = entrada.nextLine();
 
-                    System.out.println("Sucesso ao cadastrar usuário!");
+                            Cliente cliente = new Cliente(nome, cpf, senha);
+                            clientesLista.add(cliente);
+
+                            System.out.println("Sucesso ao cadastrar usuário!");
+                            verWhile = 1;
+                        }
+                    }
                 }
 
                 // Criação de conta para o usuário selecionado
@@ -84,9 +92,9 @@ public class Banco1000 {
                     while (verif != 1){
                         int cpf = entrada.nextInt();
                         int i = 0;
-                        for (int cpfusuario : clientesCpf){
-                            if (cpf == cpfusuario){
-                                String senhaCorreta = clientesSenha.get(i);
+                        for (Cliente cliente : clientesLista){
+                            if (cpf == cliente.getCpf()){
+                                String senhaCorreta = cliente.getSenha();
                                 System.out.print("Digite a senha: ");
                                 while (true){
                                     String senha = entrada.nextLine();
@@ -105,12 +113,12 @@ public class Banco1000 {
                                                         System.out.println("O saldo inicial da conta não pode ser negativo!");
                                                     }
                                                     else{
-                                                        System.out.println("Por ultimo digite o ID da sua conta:");
+                                                        System.out.print("Por ultimo digite o ID da sua conta: ");
                                                         while (true) {
                                                             int ver = 0;
                                                             int id = entrada.nextInt();
-                                                            for (int idver : ids) {
-                                                                if (id == idver) {
+                                                            for (Conta conta : contas) {
+                                                                if (id == conta.getIdConta()) {
                                                                     System.out.println("ID já existente!");
                                                                     ver = 1;
                                                                 }
@@ -123,7 +131,6 @@ public class Banco1000 {
                                                             System.out.println("Conta criada com sucesso!");
                                                             Conta conta = new Conta(cpf, id, tipo, senha, saldo);
                                                             contas.add(conta);
-                                                            ids.add(id);
 
                                                             break;
                                                         }
@@ -276,41 +283,45 @@ public class Banco1000 {
                 }
 
                 //Autenticação de usuário
-                if (n == 4){
-                    int verWhile = 0;
-                    while (verWhile == 0){
-                        System.out.print("Por favor digite o CPF proprietário da conta: ");
-                        int cpf = entrada.nextInt();
+                if ((n == 4)){
+                    if (verLogin == 0){
+                        int verWhile = 0;
+                        while (verWhile == 0){
+                            System.out.print("Por favor digite o CPF proprietário da conta: ");
+                            int cpf = entrada.nextInt();
 
-                        int i = 0;
-                        for (Cliente cliente : clientesLista){
-                            if (cpf == cliente.getCpf()){
-                                System.out.print("Digite a senha do usuário: ");
-                                entrada.nextLine();
+                            int i = 0;
+                            for (Cliente cliente : clientesLista){
+                                if (cpf == cliente.getCpf()){
+                                    System.out.print("Digite a senha do usuário: ");
+                                    entrada.nextLine();
 
-                                do {
-                                    String senha = entrada.nextLine();
+                                    do {
+                                        String senha = entrada.nextLine();
 
-                                    for (String senhaVer : clientesSenha){
-                                        if (senha.equals(senhaVer)){
-                                            System.out.println("\nUsuário logado.");
-                                            cpfVerOp = clientesCpf.get(i);
+                                        for (Cliente cliente2 : clientesLista){
+                                            if (senha.equals(cliente.getSenha())){
+                                                cpfVerOp = cliente2.getCpf();
 
-                                            verWhile = 1;
-                                            verLogin = i+1;
+                                                verWhile = 1;
+                                                verLogin = i+1;
+                                            }
                                         }
-                                    }
-                                    if ((verWhile == 0) && (verLogin == i)){
-                                        break;
-                                    }
-                                }while ((verLogin == 0) && (verWhile != 1));
+                                        if ((verWhile == 0) && (verLogin == i)){
+                                            break;
+                                        }
+                                    }while ((verLogin == 0) && (verWhile != 1));
+                                }
+                                i++;
                             }
-                            i++;
+                            if (verWhile == 0){
+                                System.out.println("Senha ou CPF incorretos.");
+                                System.out.println("Por favor digite os dados corretamente.");
+                            }
                         }
-                        if (verWhile == 0){
-                            System.out.println("Senha ou CPF incorretos.");
-                            System.out.println("Por favor digite os dados corretamente.");
-                        }
+                    }
+                    else{
+                        System.out.println("\nVocê já está logado em uma conta!");
                     }
                 }
 
