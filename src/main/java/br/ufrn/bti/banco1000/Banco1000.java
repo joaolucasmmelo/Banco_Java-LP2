@@ -86,81 +86,97 @@ public class Banco1000 {
 
                 // Criação de conta para o usuário selecionado
                 if (n == 2){
-                    System.out.print("Digite o CPF do proprietário da conta: ");
+                    if (!clientesLista.isEmpty()){
+                        System.out.print("Digite o CPF do proprietário da conta: ");
 
-                    int verif = 0;
-                    while (verif != 1){
-                        int cpf = entrada.nextInt();
-                        int i = 0;
-                        for (Cliente cliente : clientesLista){
-                            if (cpf == cliente.getCpf()){
-                                String senhaCorreta = cliente.getSenha();
-                                System.out.print("Digite a senha: ");
-                                while (true){
-                                    String senha = entrada.nextLine();
-                                    if (senha.equals(senhaCorreta)){
-                                        //criação da conta no banco
-                                        while (true){
-                                            System.out.println("Digite o tipo de conta que deseja criar:");
-                                            System.out.println("Corrente ou Poupança");
-                                            String tipo = entrada.nextLine();
+                        int verif = 0;
+                        while (verif != 1){
+                            int cpf = entrada.nextInt();
+                            int i = 0;
+                            for (Cliente cliente : clientesLista){
+                                if (cpf == cliente.getCpf()){
+                                    String senhaCorreta = cliente.getSenha();
+                                    System.out.print("Digite a senha: ");
 
-                                            if (tipo.equals("Corrente") || tipo.equals("corrente") || tipo.equals("Poupança") || tipo.equals("poupança")){
-                                                while (true){
-                                                    System.out.print("Digite o saldo inicial da conta: ");
-                                                    double saldo = entrada.nextDouble();
-                                                    if (saldo < 0){
-                                                        System.out.println("O saldo inicial da conta não pode ser negativo!");
+                                    while (true){
+                                        String senha = entrada.next();
+                                        if (senha.equals(senhaCorreta)){
+                                            //criação da conta no banco
+                                            while (true){
+                                                System.out.println("1 - Corrente\n2 - Poupança");
+                                                System.out.print("Digite o tipo de conta que deseja criar: ");
+
+                                                String tipo = entrada.next();
+
+                                                if (tipo.equals("1") || tipo.equals("2")){
+                                                    if (tipo.equals("1")){
+                                                        tipo = "Corrente";
                                                     }
-                                                    else{
-                                                        System.out.print("Por ultimo digite o ID da sua conta: ");
-                                                        while (true) {
-                                                            int ver = 0;
-                                                            int id = entrada.nextInt();
-                                                            for (Conta conta : contas) {
-                                                                if (id == conta.getIdConta()) {
-                                                                    System.out.println("ID já existente!");
-                                                                    ver = 1;
+                                                    if (tipo.equals("2")){
+                                                        tipo = "Poupança";
+                                                    }
+
+                                                    while (true){
+                                                        System.out.print("Digite o saldo inicial da conta: ");
+                                                        double saldo = entrada.nextDouble();
+                                                        if (saldo < 0){
+                                                            System.out.println("O saldo inicial da conta não pode ser negativo!");
+                                                        }
+                                                        else{
+                                                            System.out.print("Por ultimo digite o ID da sua conta: ");
+                                                            while (true) {
+                                                                int ver = 0;
+                                                                int id = entrada.nextInt();
+                                                                for (Conta conta : contas) {
+                                                                    if (id == conta.getIdConta()) {
+                                                                        System.out.println("ID já existente!");
+                                                                        ver = 1;
+                                                                    }
                                                                 }
-                                                            }
-                                                            if (ver == 1){
-                                                                System.out.print("Por favor digite um ID exclusivo: ");
-                                                                continue;
-                                                            }
+                                                                if (ver == 1){
+                                                                    System.out.print("Por favor digite um ID exclusivo: ");
+                                                                    continue;
+                                                                }
 
-                                                            System.out.println("Conta criada com sucesso!");
-                                                            Conta conta = new Conta(cpf, id, tipo, senha, saldo);
-                                                            contas.add(conta);
+                                                                System.out.println("Conta criada com sucesso!");
+                                                                Conta conta = new Conta(cpf, id, tipo, senha, saldo);
+                                                                contas.add(conta);
 
+                                                                break;
+                                                            }
                                                             break;
                                                         }
-                                                        break;
                                                     }
+                                                    break;
                                                 }
-                                                break;
+
+                                                else{
+                                                    System.out.println("Tipo de conta inválido!");
+                                                }
                                             }
 
-                                            else{
-                                                System.out.println("Tipo de conta inválido!");
-                                            }
+
+                                            //final da criação da conta
+                                            verif = 1;
+                                            break;
                                         }
-
-
-                                        //final da criação da conta
-                                        verif = 1;
-                                        break;
+                                        else {
+                                            System.out.println("\nSenha incorreta!");
+                                            verif = 1;
+                                            break;
+                                        }
                                     }
                                 }
+                                i++;
                             }
-                            i++;
-                        }
-                        if (verif == 1){
+                            if (verif != 1) {
+                                System.out.println("CPF inválido!");
+                            }
                             break;
                         }
-                        else{
-                            System.out.println("CPF inválido!");
-                            System.out.print("Digite o CPF do proprietário da conta: ");
-                        }
+                    }
+                    else{
+                        System.out.println("Não há nenhum usuário cadastrado para criação de contas!");
                     }
                 }
 
