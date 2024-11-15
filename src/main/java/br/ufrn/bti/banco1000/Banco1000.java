@@ -41,11 +41,10 @@ public class Banco1000 {
             }
             else{
                 System.out.println("\nDados da conta:");
-                System.out.println("Nome: " + clientesLista.get(verLogin).getNome());
-                System.out.println("CPF: " + clientesLista.get(verLogin).getCpf());
+                System.out.println("Nome: " + clientesLista.get(verLogin - 1).getNome());
+                System.out.println("CPF: " + clientesLista.get(verLogin - 1).getCpf());
                 menu.menuImprime();
             }
-
 
             n = entrada.nextInt();
 
@@ -232,7 +231,22 @@ public class Banco1000 {
 
                                             // Depósito
                                             if (op == 3) {
+                                                int verDepo = 0;
 
+                                                for (Conta conta : contas){
+                                                    if (conta.getIdConta() == id){
+                                                        while (verDepo != 1){
+                                                            System.out.print("Digite quanto deseja depositar: ");
+                                                            double valorDeposito = entrada.nextDouble();
+
+                                                            conta.setSaldo(conta.getSaldo() + valorDeposito);
+                                                            System.out.println("Novo Saldo: R$ " + conta.getSaldo());
+
+                                                            verDepo = 1;
+                                                        }
+                                                        break;
+                                                    }
+                                                }
                                             }
 
                                             //
@@ -269,8 +283,8 @@ public class Banco1000 {
                         int cpf = entrada.nextInt();
 
                         int i = 0;
-                        for (int cpfver : clientesCpf){
-                            if (cpf == cpfver){
+                        for (Cliente cliente : clientesLista){
+                            if (cpf == cliente.getCpf()){
                                 System.out.print("Digite a senha do usuário: ");
                                 entrada.nextLine();
 
@@ -280,13 +294,10 @@ public class Banco1000 {
                                     for (String senhaVer : clientesSenha){
                                         if (senha.equals(senhaVer)){
                                             System.out.println("\nUsuário logado.");
-                                            System.out.println("\nDados do cliente:");
-
-                                            clientesLista.get(i).clienteImrpime();
                                             cpfVerOp = clientesCpf.get(i);
 
                                             verWhile = 1;
-                                            verLogin = i;
+                                            verLogin = i+1;
                                         }
                                     }
                                     if ((verWhile == 0) && (verLogin == i)){
@@ -301,7 +312,6 @@ public class Banco1000 {
                             System.out.println("Por favor digite os dados corretamente.");
                         }
                     }
-
                 }
 
                 if (n == 5){

@@ -20,6 +20,7 @@ public class Menu {
         System.out.println("2 - Saque");
         System.out.println("3 - Depósito");
         System.out.println("4 - Transferência");
+        System.out.println("0 - Sair do Menu de Operações bancárias");
         System.out.print("Digite o número correspondente a operação que deseja realizar: ");
     }
 }
