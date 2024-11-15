@@ -175,37 +175,41 @@ public class Banco1000 {
                                 if (id == idVerLista){
                                     verWhile = 1;
                                     int op = 1;
-                                    menu.menuOperacoesImprime();
 
                                     while (verWhileOp != 1) {
+                                        if (verWhileOp != 1){
+                                            menu.menuOperacoesImprime();
+                                        }
+
                                         op = entrada.nextInt();
                                         if ((op != 1) && (op != 2) && (op != 3) && (op != 4) && (op != 0)) {
                                             System.out.println("Por favor digite uma opção válida!");
-                                        } else {
+                                        }
+                                        else {
                                             if (op == 1) {
-                                                verWhileOp = 1;
-
+                                                System.out.println("Saldo da conta " + id + ":");
+                                                for (Conta conta : contas){
+                                                    if (conta.getIdConta() == id){
+                                                        System.out.println("R$ " + conta.getSaldo());
+                                                    }
+                                                }
                                             }
 
                                             if (op == 2) {
-                                                verWhileOp = 1;
 
                                             }
 
                                             if (op == 3) {
-                                                verWhileOp = 1;
 
                                             }
 
                                             if (op == 4) {
-                                                verWhileOp = 1;
 
                                             }
 
                                             if (op == 0) {
                                                 verWhileOp = 1;
                                                 System.out.println("Saindo das Operações bancárias.");
-
                                             }
                                         }
                                     }
