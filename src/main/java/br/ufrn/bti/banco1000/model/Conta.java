@@ -14,18 +14,6 @@ public class Conta {
     private int idConta;
     private String tipo;
     private double saldo;
-    private ArrayList<Movimentacao> movimentacao = new ArrayList();
-    private ArrayList<Integer> idContas = new ArrayList();
-
-    public Conta(int cpf, int idConta, String tipo, String senha, double saldo, ArrayList movimentacao) {
-        this.cpf = cpf;
-        this.idConta = idConta;
-        this.tipo = tipo;
-        this.senha = senha;
-        this.saldo = saldo;
-        this.movimentacao = movimentacao;
-        idContas.add(idConta);
-    }
 
     public Conta(int cpf, int idConta, String  tipo, String senha, double saldo) {
         this.cpf = cpf;
@@ -33,41 +21,10 @@ public class Conta {
         this.tipo = tipo;
         this.senha = senha;
         this.saldo = saldo;
-        idContas.add(idConta);
     }
 
     public int getIdConta(){
         return this.idConta;
-    }
-
-    public void depositar(double valor) {
-        this.saldo = this.saldo + valor;
-        this.movimentacao.add(new Movimentacao("Deposito", this.cliente, valor));
-        
-    }
-    
-    public void sacar(double valor) {
-        if (this.saldo - valor >= 0) {
-            this.saldo = this.saldo - valor;
-            this.movimentacao.add(new Movimentacao("Saque", this.cliente, valor));
-            
-        }
-    }
-    
-    public void transferir(int agencia, int idConta, double valor) {
-        if (this.saldo - valor >= 0) {
-           this.saldo = this.saldo - valor; 
-        }
-    }
-    
-    public void transferir(Conta conta, double valor) {
-        
-         if (this.saldo - valor >= 0) {
-           conta.sacar(valor);
-           conta.depositar(valor);
-           conta.movimentacao.add(new Movimentacao("Saque", this.cliente, valor));
-           this.movimentacao.add(new Movimentacao("Deposito", this.cliente, valor));
-        }
     }
 
     public String getTipo() {
@@ -109,19 +66,8 @@ public class Conta {
     public int getCpf() {
         return this.cpf;
     }
-    
+
     public double getSaldo() {
         return this.saldo;
-    }
-    
-    @Override
-    public boolean equals(Object o){
-        return false;
-    }
-    
-    @Override
-    public String toString()
-    {
-        return "";
     }
 }

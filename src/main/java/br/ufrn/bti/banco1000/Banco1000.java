@@ -7,10 +7,7 @@ package br.ufrn.bti.banco1000;
 import br.ufrn.bti.banco1000.model.Cliente;
 import br.ufrn.bti.banco1000.model.Menu;
 import br.ufrn.bti.banco1000.model.Conta;
-import br.ufrn.bti.banco1000.model.Movimentacao;
-import br.ufrn.bti.banco1000.model.Transferencia;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -60,7 +57,7 @@ public class Banco1000 {
                         entrada.nextLine();
                         String nome = entrada.nextLine();
 
-                        System.out.print("\nDigite o CPF do usuário: ");
+                        System.out.print("Digite o CPF do usuário: ");
                         int cpf = entrada.nextInt();
 
                         for (Cliente cliente : clientesLista){
@@ -71,7 +68,7 @@ public class Banco1000 {
                         }
 
                         if (verWhile != 1){
-                            System.out.print("\nDigite a senha do usuário: ");
+                            System.out.print("Digite a senha do usuário: ");
                             entrada.nextLine();
                             String senha = entrada.nextLine();
 
@@ -87,7 +84,7 @@ public class Banco1000 {
                 // Criação de conta para o usuário selecionado
                 if (n == 2){
                     if (!clientesLista.isEmpty()){
-                        System.out.print("Digite o CPF do proprietário da conta: ");
+                        System.out.print("\nDigite o CPF do proprietário da conta: ");
 
                         int verif = 0;
                         while (verif != 1){
@@ -190,7 +187,7 @@ public class Banco1000 {
                         int verWhileOp = 0;
 
                         while (verWhile != 1){
-                            System.out.println("Suas contas: ");
+                            System.out.println("\nSuas contas: ");
                             for (Conta conta : contas){
                                 if (cpfVerOp == conta.getCpf()){
                                     idsUsuario.add(conta.getIdConta());
@@ -213,15 +210,14 @@ public class Banco1000 {
 
                                         op = entrada.nextInt();
                                         if ((op != 1) && (op != 2) && (op != 3) && (op != 4) && (op != 0)) {
-                                            System.out.println("Por favor digite uma opção válida!");
+                                            System.out.println("\nPor favor digite uma opção válida!");
                                         }
                                         else {
                                             // Consulta de Saldo
                                             if (op == 1) {
-                                                System.out.println("Saldo da conta " + id + ":");
                                                 for (Conta conta : contas){
                                                     if (conta.getIdConta() == id){
-                                                        System.out.println("R$ " + conta.getSaldo());
+                                                        System.out.println("\nSaldo da conta " + id + " R$ " + conta.getSaldo());
                                                     }
                                                 }
                                             }
@@ -233,7 +229,9 @@ public class Banco1000 {
                                                 for (Conta conta : contas){
                                                     if (conta.getIdConta() == id){
                                                         while (verSaque != 1){
-                                                            System.out.print("Digite quanto deseja sacar: ");
+                                                            System.out.println("\nSaldo atual: R$ " + conta.getSaldo());
+
+                                                            System.out.print("\nDigite quanto deseja sacar: ");
                                                             double valorSaque = entrada.nextDouble();
 
                                                             if (valorSaque > conta.getSaldo()){
@@ -259,7 +257,9 @@ public class Banco1000 {
                                                 for (Conta conta : contas){
                                                     if (conta.getIdConta() == id){
                                                         while (verDepo != 1){
-                                                            System.out.print("Digite quanto deseja depositar: ");
+                                                            System.out.println("\nSaldo atual: R$ " + conta.getSaldo());
+
+                                                            System.out.print("\nDigite quanto deseja depositar: ");
                                                             double valorDeposito = entrada.nextDouble();
 
                                                             conta.setSaldo(conta.getSaldo() + valorDeposito);
@@ -272,9 +272,81 @@ public class Banco1000 {
                                                 }
                                             }
 
-                                            //
+                                            // Transferência
                                             if (op == 4) {
+                                                int verTransf = 0;
 
+                                                for (Conta conta : contas){
+                                                    if (conta.getIdConta() == id){
+                                                        while (verTransf != 1){
+                                                            int numIdsVer = 0;
+                                                            System.out.print("\nDigite o CPF para qual deseja fazer uma transferência: ");
+                                                            int cpf = entrada.nextInt();
+                                                            System.out.println("\nContas disponíveis neste CPF:");
+                                                            for (Conta conta2 : contas){
+                                                                if (cpf == conta2.getCpf() && conta2.getIdConta() != id){
+                                                                    System.out.println(conta2.getIdConta());
+                                                                    numIdsVer++;
+                                                                }
+                                                            }
+                                                            if (numIdsVer > 0){
+                                                                int verWhileTransf = 0;
+                                                                while (verWhileTransf != 1){
+                                                                    System.out.print("Digite o ID da conta para qual deseja fazer a transferência: ");
+                                                                    int id1 = entrada.nextInt();
+
+                                                                    do {
+                                                                        for (Conta conta3 : contas){
+                                                                            if ((id1 == conta3.getIdConta()) && (cpf == conta3.getCpf())){
+                                                                                if (id1 != id){
+                                                                                    int verrr = 0;
+                                                                                    while (verrr != 1){
+                                                                                        System.out.print("\nDigite o valor que deseja transferir: ");
+                                                                                        double valor = entrada.nextDouble();
+                                                                                        for (Conta conta4 : contas){
+                                                                                            if (conta4.getIdConta() == id){
+                                                                                                if (valor > conta4.getSaldo()){
+                                                                                                    System.out.println("\nSaldo Inssuficiente!");
+                                                                                                    System.out.println("Saldo Disponível: R$ " + conta4.getSaldo());
+                                                                                                }
+                                                                                                else{
+                                                                                                    conta4.setSaldo(conta4.getSaldo() - valor);
+                                                                                                    conta3.setSaldo(conta3.getSaldo() + valor);
+
+                                                                                                    System.out.println("Novo Saldo: R$ " + conta4.getSaldo());
+                                                                                                    System.out.println("Saldo da conta destino: R$ " + conta3.getSaldo());
+
+                                                                                                    verWhileTransf = 1;
+                                                                                                    verTransf = 1;
+                                                                                                    verrr = 1;
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                                else{
+                                                                                    System.out.println("Não é possível realizar essa transferência.");
+                                                                                    verWhileTransf = 1;
+                                                                                }
+                                                                                break;
+                                                                            }
+                                                                        }
+                                                                        if (verWhileTransf != 1){
+                                                                            System.out.println("Essa conta não pertence a esse CPF!");
+                                                                            System.out.print("Por favor digite um ID pertencente ao CPF escolhido\n");
+                                                                            break;
+                                                                        }
+                                                                    }while (verWhileTransf != 1);
+                                                                }
+                                                            }
+                                                            else{
+                                                                System.out.println("Esse CPF não possui nenhuma conta ativa.");
+                                                                verTransf = 1;
+                                                            }
+                                                        }
+                                                        break;
+                                                    }
+                                                }
                                             }
 
                                             // Saída das operações bancárias
@@ -286,14 +358,13 @@ public class Banco1000 {
                                     }
                                 }
                             }
-
                             if (verWhile == 0){
-                                System.out.println("Digite um ID correspondente a uma das opções abaixo!");
+                                System.out.println("\nDigite um ID correspondente a uma das opções abaixo!");
                             }
                         }
                     }
                     else{
-                        System.out.println("Você precisa estar logado em uma conta para poder realizar operações!");
+                        System.out.println("\nVocê precisa estar logado em uma conta para poder realizar operações!");
                         System.out.println("Por favor realize login antes de voltar para as operações. (Opção 4)");
                     }
                 }
@@ -318,6 +389,7 @@ public class Banco1000 {
                                         for (Cliente cliente2 : clientesLista){
                                             if (senha.equals(cliente.getSenha())){
                                                 cpfVerOp = cliente2.getCpf();
+                                                System.out.println("\nUsuário Logado com sucesso.");
 
                                                 verWhile = 1;
                                                 verLogin = i+1;
@@ -348,7 +420,7 @@ public class Banco1000 {
                         System.out.println("Sucesso ao sair da conta.");
                     }
                     else{
-                        System.out.println("Você já não está logado em conta nehuma.");
+                        System.out.println("\nVocê já não está logado em conta nehuma.");
                     }
                 }
             }

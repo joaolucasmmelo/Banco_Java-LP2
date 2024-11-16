@@ -23,12 +23,6 @@ public class Cliente {
        this.senha = senha;
     }
 
-    public void clienteImrpime(){
-        System.out.println("Nome: " + this.nome);
-        System.out.println("CPF : " + this.cpf);
-    }
-
-
     //getters e setters
     public String getNome() { return nome; }
 
