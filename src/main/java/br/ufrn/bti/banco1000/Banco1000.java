@@ -154,14 +154,12 @@ public class Banco1000 {
 
 
                                             //final da criação da conta
-                                            verif = 1;
-                                            break;
                                         }
                                         else {
                                             System.out.println("\nSenha incorreta!");
-                                            verif = 1;
-                                            break;
                                         }
+                                        verif = 1;
+                                        break;
                                     }
                                 }
                                 i++;
@@ -201,7 +199,7 @@ public class Banco1000 {
                             for (int idVerLista : idsUsuario){
                                 if (id == idVerLista){
                                     verWhile = 1;
-                                    int op = 1;
+                                    int op;
 
                                     while (verWhileOp != 1) {
                                         if (verWhileOp != 1){
